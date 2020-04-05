@@ -33,8 +33,10 @@
         integrity="sha256-pODNVtK3uOhL8FUNWWvFQK0QoQoV3YA9wGGng6mbZ0E=" crossorigin="anonymous" />
 
 <style>
-  .errors{
-    color: red;
+  .error{
+    color: #da0000;
+    font-size:small;
+    font-family: sans-serif;
   }
 </style>
 
@@ -322,6 +324,9 @@
 <!-- DATATABLE -->
 <script src="{{ asset('assets/admin/plugins/datatables/jquery.dataTables.js') }}"></script>
 <script src="{{ asset('assets/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
+
+
+
 
 @yield('js')
 

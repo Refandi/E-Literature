@@ -5,17 +5,14 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
-use App\JenisBuku;
-use App\Penerbit;
-use App\Pengarang;
 use App\TahunTerbit;
 
-class KategoriController extends Controller
+class TahunTerbitController extends Controller
 {
  
     public function index()
     {
-        return view('Kategori.index');
+        //
     }
  
     public function create()
@@ -25,18 +22,22 @@ class KategoriController extends Controller
  
     public function store(Request $request)
     {
+        $id = $request->id;
+        $post   =   TahunTerbit::updateOrCreate(['id' => $id],
+        ['tahun_terbit' => $request->tahun_terbit,]); 
 
+        return response()->json($post);
     }
  
     public function show($id)
     {
         //
     }
- 
+
     public function edit($id)
     {
         $where = array('id' => $id);
-        $post = JenisBuku::where($where)->first();
+        $post = TahunTerbit::where($where)->first();
         return response()->json($post);
     }
  
@@ -44,26 +45,25 @@ class KategoriController extends Controller
     {
         //
     }
- 
+
     public function destroy($id)
     {
-        $post = JenisBuku::where('id',$id)->delete();
+        $post = TahunTerbit::where('id',$id)->delete();
         return response()->json($post);
     }
 
     public function datatable()
     {
-        $data = JenisBuku::all();
+        $data = TahunTerbit::all();
         return Datatables::of($data)
             ->addColumn('action', function($data) {
-                $button = '<a href="javascript:void(0)" data-id="'.$data->id.'" class="edit btn btn-info btn-sm btn-edit" data-toggle="tooltip"><i class="far fa-edit"></i></a>';
+                $button = '<a href="javascript:void(0)" data-id="'.$data->id.'" class="btn btn-info btn-sm btn-tahun_terbit-edit" data-toggle="tooltip"><i class="far fa-edit"></i></a>';
                 $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm"><i class="far fa-trash-alt"></i></button>';     
+                $button .= '<button type="button" name="delete" id="'.$data->id.'" class="btn btn-danger btn-sm btn-tahun_terbit-hapus"><i class="far fa-trash-alt"></i></button>';     
                 return $button;
 
             })
             ->addIndexColumn()->make(true);
         
     }
-
 }

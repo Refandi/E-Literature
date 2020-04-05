@@ -6,16 +6,13 @@ use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 
 use App\JenisBuku;
-use App\Penerbit;
-use App\Pengarang;
-use App\TahunTerbit;
 
-class KategoriController extends Controller
+class JenisBukuController extends Controller
 {
  
     public function index()
     {
-        return view('Kategori.index');
+        //
     }
  
     public function create()
@@ -25,7 +22,11 @@ class KategoriController extends Controller
  
     public function store(Request $request)
     {
+        $id = $request->id;
+        $post   =   JenisBuku::updateOrCreate(['id' => $id],
+        ['jenis_buku' => $request->jenis_buku,]); 
 
+        return response()->json($post);
     }
  
     public function show($id)
@@ -65,5 +66,4 @@ class KategoriController extends Controller
             ->addIndexColumn()->make(true);
         
     }
-
 }

@@ -21,8 +21,15 @@ Route::get('/', function () {
 //RESOURCE
 Route::resource('user', 'UserController');
 Route::resource('kategori', 'KategoriController');
+Route::resource('jenis-buku', 'JenisBukuController');
+Route::resource('pengarang', 'PengarangController');
+Route::resource('penerbit', 'PenerbitController');
+Route::resource('tahun-terbit', 'TahunTerbitController');
 
 
 //Datatable
 Route::get('/datatable/user', 'UserController@datatable')->name('datatable_user');
-Route::get('/datatable/kategori', 'KategoriController@datatable')->name('datatable_kategori');
+Route::get('/datatable/jenis-buku', 'JenisBukuController@datatable')->name('datatable_jenis_buku');
+Route::get('/datatable/pengarang', 'PengarangController@datatable')->name('datatable_pengarang');
+Route::get('/datatable/penerbit', 'PenerbitController@datatable')->name('datatable_penerbit');
+Route::get('/datatable/tahun-terbit', 'TahunTerbitController@datatable')->name('datatable_tahun_terbit');
