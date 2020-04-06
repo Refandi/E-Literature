@@ -3,82 +3,92 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Yajra\DataTables\DataTables;
+
+use App\Buku;
+use App\JenisBuku;
+use App\Pengarang;
+use App\Penerbit;
+use App\TahunTerbit;
 
 class BukuController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function index()
     {
-        //
+        $jenis_buku = JenisBuku::all();
+        $pengarang = Pengarang::all();
+        $penerbit = Penerbit::all();
+        $tahun_terbit = TahunTerbit::all();
+        return view('Buku.index', compact('jenis_buku', 'pengarang', 'penerbit', 'tahun_terbit'));
     }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function create()
     {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+    }
+ 
     public function store(Request $request)
     {
-        //
+        $input = $request->all();
+        Buku::updateOrCreate($input);
+        return response()->json($input);
     }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function show($id)
     {
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit($id)
     {
-        //
+        $where = array('id' => $id);
+        $post = Buku::where($where)->first();
+        return response()->json($post);
     }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function update(Request $request, $id)
     {
-        //
+        $data = Buku::findOrFail($id);
+        $input = $request->all();
+        $data->update($input);
+        return response()->json($input);
     }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+ 
     public function destroy($id)
     {
-        //
+        $post = Buku::where('id',$id)->delete();
+        return response()->json($post);
+    }
+
+    public function datatable()
+    {
+        $data = Buku::all();
+        return Datatables::of($data)
+            ->addColumn('action', function($data) {
+                $button = '<a href="javascript:void(0)" data-id="'.$data->id.'" class="btn btn-info btn-sm btn-ubah-buku" data-toggle="tooltip"><i class="far fa-edit"></i></a>';
+                $button .= '&nbsp;&nbsp;';
+                $button .= '<button type="button" name="delete" id="'.$data->id.'" class="btn btn-danger btn-sm btn-hapus-buku"><i class="far fa-trash-alt"></i></button>';     
+                return $button;
+            })
+
+            ->addColumn('jenis_buku', function($data) {
+                return $data->jenis_buku['jenis_buku'];
+            })
+
+            ->addColumn('pengarang', function($data) {
+                return $data->pengarang['pengarang'];
+            })
+
+            ->addColumn('penerbit', function($data) {
+                return $data->penerbit['penerbit'];
+            })
+
+            ->addColumn('tahun_terbit', function($data) {
+                return $data->tahun_terbit['tahun_terbit'];
+            })
+
+            ->addIndexColumn()->make(true);
+        
     }
 }

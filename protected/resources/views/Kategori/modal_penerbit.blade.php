@@ -100,10 +100,6 @@
         $('#tombol-penerbit').click(function () {
         console.log
         tes = $(this).attr('id');   
-        //   if(tes === "tombol-jenis"){
-        //     $('.input_form').attr("name", "jenis_buku");
-        //     we = $('.input_form').attr("name");
-        //   }
         $('#id').val('');  
         $('#modal-penerbit-judul').html("Tambah Data");  
         $('#modal-penerbit-tambah').modal('show');  

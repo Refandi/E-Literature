@@ -152,15 +152,15 @@
             </a>
           </li>
           <li class="nav-item">
-            <a href="" class="nav-link">
+            <a href="{{ route('buku.index') }}" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
-                Multi Upload
+                Buku
               </p>
             </a>
           </li>
           <li class="nav-item">
-            <a href="pages/widgets.html" class="nav-link">
+            <a href="" class="nav-link">
               <i class="nav-icon fas fa-th"></i>
               <p>
                 Widgets

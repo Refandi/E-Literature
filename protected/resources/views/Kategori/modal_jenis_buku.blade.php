@@ -108,7 +108,7 @@
 
             $('#id').val(''); //valuenya menjadi kosong
             // $('#form-tambah').trigger("reset"); //mereset semua input dll didalamnya
-            $('#modal-judul').html("Tambah Pegawai Baru"); //valuenya tambah pegawai baru
+            $('#modal-judul').html("Tambah Data"); //valuenya tambah pegawai baru
             $('#tambah-modal').modal('show'); //modal tampil
             });
 
@@ -171,7 +171,7 @@
         $('body').on('click', '.btn-edit', function () {
             var data_id = $(this).data('id');
             $.get('jenis-buku/' + data_id + '/edit', function (data) {
-                $('#modal-judul_edit').html("Edit Post");
+                $('#modal-judul_edit').html("Ubah Data");
                 $('#edit-modal').modal('show');              
                 $('#id_edit').val(data.id);
                 $('#nama_edit').val(data.jenis_buku);

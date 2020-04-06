@@ -11,4 +11,12 @@ class Penerbit extends Model
     protected $fillable = [
         'penerbit'
     ];
+
+
+    //Membuat relasi Many ke model/tabel jenis_buku
+    //jenis_buku bisa mempunyai banyak buku 
+    public function buku()
+    {
+    return $this->hasMany('App\Buku'); 
+    }
 }

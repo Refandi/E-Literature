@@ -25,6 +25,7 @@ Route::resource('jenis-buku', 'JenisBukuController');
 Route::resource('pengarang', 'PengarangController');
 Route::resource('penerbit', 'PenerbitController');
 Route::resource('tahun-terbit', 'TahunTerbitController');
+Route::resource('buku', 'BukuController');
 
 
 //Datatable
@@ -33,3 +34,4 @@ Route::get('/datatable/jenis-buku', 'JenisBukuController@datatable')->name('data
 Route::get('/datatable/pengarang', 'PengarangController@datatable')->name('datatable_pengarang');
 Route::get('/datatable/penerbit', 'PenerbitController@datatable')->name('datatable_penerbit');
 Route::get('/datatable/tahun-terbit', 'TahunTerbitController@datatable')->name('datatable_tahun_terbit');
+Route::get('/datatable/buku', 'BukuController@datatable')->name('datatable_buku');
