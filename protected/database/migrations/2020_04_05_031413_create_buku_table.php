@@ -24,7 +24,9 @@ class CreateBukuTable extends Migration
             $table->foreign('penerbit_id')->references('id')->on('penerbit')->onDelete('cascade')->onUpdate('cascade');
             $table->bigInteger('tahun_terbit_id')->unsigned();
             $table->foreign('tahun_terbit_id')->references('id')->on('tahun_terbit')->onDelete('cascade')->onUpdate('cascade');
-            $table->string('sinopsis')->nullable();
+            $table->text('sinopsis')->nullable();
+            $table->string('path')->nullable();
+            $table->string('nama')->nullable();
             $table->timestamps();
         });
     }

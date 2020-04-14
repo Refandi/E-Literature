@@ -1,111 +1,142 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.home')
 
-        <title>Laravel</title>
+@section('content')
+<div class="content-header">
+      <div class="container-fluid">
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+      <div class="alert bg-gradient-secondary " role="alert">
+        <h4 class="alert-heading">Selamat Datang!</h4>
+        <p>E-Literature adalah Website yang menyediakan buku-buku yang </p>
+        <hr>
+        <p class="mb-0">Untuk bisa mengunduh buku-buku yang tersedia, pengguna harus melakukan Login</p>
+      </div>
 
-        <link rel="stylesheet" href="{{ asset('assets/admin/plugins/datatables-bs4/css/dataTables.bootstrap4.css') }}">
-
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-2">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+             
+              <div class="info-box-content">
+                <div class="col-sm-12">
+                  <span class="info-box-text"><b>Jenis Buku</b></span>
+                    <select class="form-control custom-select filter-select" data-column="2">
+                        <option value="">Pilih</option>
+                        @foreach($jenis_buku as $data)
+                        <option value="{{ $data->jenis_buku }}"> {{ $data->jenis_buku }}</option>
+                        @endforeach
+                    </select>  
                 </div>
-            @endif
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <input type="text" name="email" class="mb-3 form-control filter-input" placeholder="Jenis Buku . . ." data-column="2" />
+            <!-- /.info-box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-2">
+              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
+              <div class="info-box-content">
+                <div class="col-sm-12">
+                  <span class="info-box-text"><b>Pengarang</b></span>
+                    <select class="form-control custom-select filter-select" data-column="3">
+                        <option value="">Pilih</option>
+                        @foreach($pengarang as $data)
+                        <option value="{{ $data->pengarang }}"> {{ $data->pengarang }}</option>
+                        @endforeach
+                    </select>  
                 </div>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+            <input type="text" name="email" class="mb-3 form-control filter-input" placeholder="Pengarang . . ." data-column="3" />
+          </div>
+          <!-- /.col -->
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+          <!-- fix for small devices only -->
+          <div class="clearfix hidden-md-up"></div>
 
-                <div class="card-body">
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-2">
+              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+              <div class="info-box-content">
+                  <div class="col-sm-12">
+                    <span class="info-box-text"><b>Penerbit</b></span>
+                      <select class="form-control custom-select filter-select" data-column="4">
+                          <option value="">Pilih</option>
+                          @foreach($penerbit as $data)
+                          <option value="{{ $data->penerbit }}"> {{ $data->penerbit }}</option>
+                          @endforeach
+                      </select>  
+                  </div>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+            <input type="text" name="email" class="mb-3 form-control filter-input" placeholder="Penerbit . . ." data-column="4" />
+          </div>
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-2">
+              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+              <div class="info-box-content">
+                  <div class="col-sm-12">
+                    <span class="info-box-text"><b>Tahun</b></span>
+                      <select class="form-control custom-select filter-select" data-column="5">
+                          <option value="">Pilih</option>
+                          @foreach($tahun_terbit as $data)
+                          <option value="{{ $data->tahun_terbit }}"> {{ $data->tahun_terbit }}</option>
+                          @endforeach
+                      </select>  
+                  </div>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+            <input type="text" name="email" class="mb-3 form-control filter-input" placeholder="Tahun . . ." data-column="5" />
+          </div>
+          <!-- /.col -->
+        </div>
+        <!-- /.row -->
+
+        
+      </div><!-- /.container-fluid -->
+    </div>
+    <!-- /.content-header -->
+
+    <!-- Main content -->
+    <section class="content">
+      <div class="container-fluid">
+        <!-- Small boxes (Stat box) -->
+
+        <!-- /.row -->
+        <!-- Main row -->
+        <div class="row">
+          <!-- Left col -->
+          <section class="col-lg-12 connectedSortable">
+            <!-- Custom tabs (Charts with tabs)-->
+            <div class="card">
+              <div class="card-header">
+                <h3 class="card-title">
+                  Daftar Buku
+                </h3>
+
+              </div><!-- /.card-header -->
+              <div class="card-body">
               <table id="table" class="table table-bordered table-striped">
                 <thead>
                 <tr>
                   <th>No</th>
-                  <th>Nama</th>
-                  <th>Email</th>
-                  <th>Alamat</th>
+                  <th>Judul</th>
+                  <th>Jenis</th>
+                  <th>Pengarang</th>
+                  <th>Penerbit</th>
+                  <th>Tahun</th>
+                  <th>Sinopsis</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -113,31 +144,50 @@
                 </tbody>
               </table>
               </div><!-- /.card-body -->
-
-
             </div>
-        </div>
+            <!-- /.card -->
 
-<!-- DATATABLE -->
-<script src="{{ asset('assets/admin/plugins/datatables/jquery.dataTables.js') }}"></script>
-<script src="{{ asset('assets/admin/plugins/datatables-bs4/js/dataTables.bootstrap4.js') }}"></script>
-<script>
+            <!-- DIRECT CHAT -->
+
+        </div>
+        <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+</section>
+@endsection
+
+@section('js')
+    <script>
             $(document).ready(function() {
-                $('#table').DataTable({
+                let table = $('#table').DataTable({
                     processing: true,
                     serverSide: true,
                     timeout: 500,
                     'autoWidth'   : false,
-                    ajax: "",
+                    ajax: "{{ route('datatable_welcome') }}",
                     columns: [
                         {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                        {data: 'nama', name: 'nama'},
-                        {data: 'email', name: 'email'},
-                        {data: 'alamat', name: 'alamat'},
+                        {data: 'judul_buku', name: 'judul_buku'},
+                        {data: 'jenis_buku', name: 'jenis_buku'},
+                        {data: 'pengarang', name: 'pengarang'},
+                        {data: 'penerbit', name: 'penerbit'},
+                        {data: 'tahun_terbit', name: 'tahun_terbit'},
+                        {data: 'sinopsis', name: 'sinopsis'},
                     ]
                 });
+
+                $('.filter-input').keyup(function(){
+                  table.column( $(this).data('column'))
+                    .search( $(this).val())
+                    .draw();
+                });
+
+                $('.filter-select').change(function(){
+                  table.column( $(this).data('column'))
+                    .search( $(this).val())
+                    .draw();
+                })
+                
+
             });
     </script>
-    </body>
-
-</html>
+@endsection

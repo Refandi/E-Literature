@@ -12,10 +12,23 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
+use App\JenisBuku;
+use App\Penerbit;
+use App\Pengarang;
+use App\TahunTerbit;
+
 
 Route::get('/', function () {
-    return view('User/tes');
+    $jenis_buku = JenisBuku::all();
+    $pengarang = Pengarang::all();
+    $penerbit = Penerbit::all();
+    $tahun_terbit = TahunTerbit::all();
+    return view('welcome', compact('jenis_buku', 'pengarang', 'penerbit', 'tahun_terbit'));
 });
+
+
+
+// Route::get('/', 'KategoriController@index');
 
 
 //RESOURCE
@@ -35,3 +48,11 @@ Route::get('/datatable/pengarang', 'PengarangController@datatable')->name('datat
 Route::get('/datatable/penerbit', 'PenerbitController@datatable')->name('datatable_penerbit');
 Route::get('/datatable/tahun-terbit', 'TahunTerbitController@datatable')->name('datatable_tahun_terbit');
 Route::get('/datatable/buku', 'BukuController@datatable')->name('datatable_buku');
+Route::get('/datatable/welcome', 'KategoriController@datatable_welcome')->name('datatable_welcome');
+
+//DOWNLOAD FILE
+Route::get('/download-file/{id}', 'BukuController@download_pdf')->name('download.file');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');

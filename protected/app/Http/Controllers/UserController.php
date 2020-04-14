@@ -13,22 +13,19 @@ class UserController extends Controller
  
     public function index()
     {
-        //
+        return view('User.index');
     }
  
     public function create()
     {
-        $model = new User();
-        return view('User.form', compact('model'));
+
     }
  
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'name' => 'required',
-            'email' => 'required',
-        ]);
-
+        $input = $request->all();
+        User::updateOrCreate($input);
+        return response()->json($input);
     }
  
     public function show($id)
@@ -38,17 +35,23 @@ class UserController extends Controller
  
     public function edit($id)
     {
-        //
+        $where = array('id' => $id);
+        $post = User::where($where)->first();
+        return response()->json($post);
     }
 
     public function update(Request $request, $id)
     {
-        //
+        $data = User::findOrFail($id);
+        $input = $request->all();
+        $data->update($input);
+        return response()->json($input);
     }
  
     public function destroy($id)
     {
-        //
+        $post = User::where('id',$id)->delete();
+        return response()->json($post);
     }
 
     public function datatable()

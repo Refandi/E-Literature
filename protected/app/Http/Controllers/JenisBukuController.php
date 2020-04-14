@@ -12,7 +12,7 @@ class JenisBukuController extends Controller
  
     public function index()
     {
-        //
+        return view('Kategori.index');
     }
  
     public function create()

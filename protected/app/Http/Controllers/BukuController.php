@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
-
+use Illuminate\Support\Facades\Storage;
+use File;
 use App\Buku;
 use App\JenisBuku;
 use App\Pengarang;
@@ -13,6 +14,10 @@ use App\TahunTerbit;
 
 class BukuController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
  
     public function index()
     {
@@ -30,10 +35,61 @@ class BukuController extends Controller
  
     public function store(Request $request)
     {
-        $input = $request->all();
-        Buku::updateOrCreate($input);
-        return response()->json($input);
+            $id = $request->id;
+
+            //ini dijalankan jika file path berisi data
+            if($request->hasFile('path')){
+                $file = $request->file('path');
+                $nama = $file->getClientOriginalName();
+                $path = $file->store('buku');
+
+                $data = Buku::findOrFail($id);
+                Storage::delete($data->path);
+                $post = Buku::updateOrCreate(['id' => $id], //id akan digunakan jika melakukan proses ubah data
+                ['judul_buku' => $request->judul_buku,
+                'jenis_buku_id' => $request->jenis_buku_id,
+                'pengarang_id' => $request->pengarang_id,
+                'penerbit_id' => $request->penerbit_id,
+                'tahun_terbit_id' => $request->tahun_terbit_id,
+                'sinopsis' => $request->sinopsis,
+                'path' => $path,
+                'nama' => $nama]
+            ); 
+            }
+            //ini dijalankan jika file path tidak diisi
+            else{
+                $post = Buku::updateOrCreate(['id' => $id], //id akan digunakan jika melakukan proses ubah data
+                    ['judul_buku' => $request->judul_buku,
+                    'jenis_buku_id' => $request->jenis_buku_id,
+                    'pengarang_id' => $request->pengarang_id,
+                    'penerbit_id' => $request->penerbit_id,
+                    'tahun_terbit_id' => $request->tahun_terbit_id,
+                    'sinopsis' => $request->sinopsis]
+                ); 
+            }
+
+            return response()->json($post);
+            
     }
+
+    // public function store(Request $request)
+    // {
+    //         $file = $request->file('path');
+    //         $nama = $file->getClientOriginalName();
+    //         $path = $file->store('buku');
+    //         $input = Buku::create([
+    //             'judul_buku' => $request->judul_buku,
+    //             'jenis_buku_id' => $request->jenis_buku_id,
+    //             'pengarang_id' => $request->pengarang_id,
+    //             'penerbit_id' => $request->penerbit_id,
+    //             'tahun_terbit_id' => $request->tahun_terbit_id,
+    //             'sinopsis' => $request->sinopsis,
+    //             'path' => $path,
+    //             'nama' => $nama
+    //         ]);
+    //         return response()->json($input);
+            
+    // }
  
     public function show($id)
     {
@@ -49,10 +105,7 @@ class BukuController extends Controller
  
     public function update(Request $request, $id)
     {
-        $data = Buku::findOrFail($id);
-        $input = $request->all();
-        $data->update($input);
-        return response()->json($input);
+
     }
  
     public function destroy($id)
@@ -61,15 +114,25 @@ class BukuController extends Controller
         return response()->json($post);
     }
 
+    public function download_pdf($id){
+        $file = Buku::find($id);
+        return response()->download('upload/'.$file->path, $file->nama);
+    }
+
     public function datatable()
     {
+        
         $data = Buku::all();
+        $route = 'download.file';
         return Datatables::of($data)
             ->addColumn('action', function($data) {
                 $button = '<a href="javascript:void(0)" data-id="'.$data->id.'" class="btn btn-info btn-sm btn-ubah-buku" data-toggle="tooltip"><i class="far fa-edit"></i></a>';
                 $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" id="'.$data->id.'" class="btn btn-danger btn-sm btn-hapus-buku"><i class="far fa-trash-alt"></i></button>';     
+                $button .= '<button type="button" name="delete" id="'.$data->id.'" class="btn btn-danger btn-sm btn-hapus-buku"><i class="far fa-trash-alt"></i></button>';  
+                $button .= '&nbsp;&nbsp;';
+                $button .= '<a href="/E-Literature/download-file/'.$data->id.'" class="btn btn-info btn-sm" data-toggle="tooltip"><i class="fas fa-download"></i></a>';                     
                 return $button;
+                
             })
 
             ->addColumn('jenis_buku', function($data) {

@@ -46,7 +46,7 @@
                     <th>Penerbit</th>
                     <th>Tahun</th>
                     <th>Sinopsis</th>
-                    <th style="width: 75px">#</th>
+                    <th style="width: 110px">#</th>
                   </tr>
                   </thead>
                   <tbody>

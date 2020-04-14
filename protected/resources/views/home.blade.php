@@ -1,85 +1,103 @@
-@extends('layouts.home')
+@extends('layouts.app')
 
 @section('content')
 <div class="content-header">
       <div class="container-fluid">
 
 
-      <div class="row">
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-info">
-              <div class="inner">
-                <h3>150</h3>
-
-                <p>New Orders</p>
+        <div class="row">
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+             
+              <div class="info-box-content">
+                <div class="col-sm-12">
+                  <span class="info-box-text"><b>Jenis Buku</b></span>
+                    <select class="form-control custom-select filter-select" data-column="2">
+                        <option value="">Pilih</option>
+                        @foreach($jenis_buku as $data)
+                        <option value="{{ $data->jenis_buku }}"> {{ $data->jenis_buku }}</option>
+                        @endforeach
+                    </select>  
+                </div>
               </div>
-              <div class="icon">
-                <i class="ion ion-bag"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.info-box-content -->
             </div>
+            <input type="text" name="email" class="form-control filter-input" placeholder="Jenis Buku . . ." data-column="2" />
+            <!-- /.info-box -->
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-success">
-              <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
 
-                <p>Bounce Rate</p>
+              <div class="info-box-content">
+                <div class="col-sm-12">
+                  <span class="info-box-text"><b>Pengarang</b></span>
+                    <select class="form-control custom-select filter-select" data-column="3">
+                        <option value="">Pilih</option>
+                        @foreach($pengarang as $data)
+                        <option value="{{ $data->pengarang }}"> {{ $data->pengarang }}</option>
+                        @endforeach
+                    </select>  
+                </div>
               </div>
-              <div class="icon">
-                <i class="ion ion-stats-bars"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
+            <input type="text" name="email" class="form-control filter-input" placeholder="Pengarang . . ." data-column="3" />
           </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-warning">
-              <div class="inner">
-                <h3>44</h3>
+          <!-- /.col -->
 
-                <p>User Registrations</p>
-              </div>
-              <div class="icon">
-                <i class="ion ion-person-add"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
-            </div>
-          </div>
-          <!-- ./col -->
-          <div class="col-lg-3 col-6">
-            <!-- small box -->
-            <div class="small-box bg-danger">
-              <div class="inner">
-                <h3>65</h3>
+          <!-- fix for small devices only -->
+          <div class="clearfix hidden-md-up"></div>
 
-                <p>Unique Visitors</p>
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+
+              <div class="info-box-content">
+                  <div class="col-sm-12">
+                    <span class="info-box-text"><b>Penerbit</b></span>
+                      <select class="form-control custom-select filter-select" data-column="4">
+                          <option value="">Pilih</option>
+                          @foreach($penerbit as $data)
+                          <option value="{{ $data->penerbit }}"> {{ $data->penerbit }}</option>
+                          @endforeach
+                      </select>  
+                  </div>
               </div>
-              <div class="icon">
-                <i class="ion ion-pie-graph"></i>
-              </div>
-              <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+              <!-- /.info-box-content -->
             </div>
+            <!-- /.info-box -->
+            <input type="text" name="email" class="form-control filter-input" placeholder="Penerbit . . ." data-column="4" />
           </div>
-          <!-- ./col -->
+          <!-- /.col -->
+          <div class="col-12 col-sm-6 col-md-3">
+            <div class="info-box mb-3">
+              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+
+              <div class="info-box-content">
+                  <div class="col-sm-12">
+                    <span class="info-box-text"><b>Tahun</b></span>
+                      <select class="form-control custom-select filter-select" data-column="5">
+                          <option value="">Pilih</option>
+                          @foreach($tahun_terbit as $data)
+                          <option value="{{ $data->tahun_terbit }}"> {{ $data->tahun_terbit }}</option>
+                          @endforeach
+                      </select>  
+                  </div>
+              </div>
+              <!-- /.info-box-content -->
+            </div>
+            <!-- /.info-box -->
+            <input type="text" name="email" class="form-control filter-input" placeholder="Tahun . . ." data-column="5" />
+          </div>
+          <!-- /.col -->
         </div>
+        <!-- /.row -->
 
-
-        <div class="row mb-2">
-          <div class="col-sm-6">
-            <h1 class="m-0 text-dark">DataTable</h1>
-          </div><!-- /.col -->
-          <div class="col-sm-6">
-            <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboardasdadasd v1</li>
-            </ol>
-          </div><!-- /.col -->
-        </div><!-- /.row -->
+        
       </div><!-- /.container-fluid -->
     </div>
     <!-- /.content-header -->
@@ -98,8 +116,7 @@
             <div class="card">
               <div class="card-header">
                 <h3 class="card-title">
-                  <i class="fas fa-chart-pie mr-1"></i>
-                  Sales
+                  Daftar Buku
                 </h3>
 
               </div><!-- /.card-header -->
@@ -108,8 +125,12 @@
                 <thead>
                 <tr>
                   <th>No</th>
-                  <th>Nama</th>
-                  <th>Email</th>
+                  <th>Judul</th>
+                  <th>Jenis</th>
+                  <th>Pengarang</th>
+                  <th>Penerbit</th>
+                  <th>Tahun</th>
+                  <th>Sinopsis</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -131,18 +152,36 @@
 @section('js')
     <script>
             $(document).ready(function() {
-                $('#table').DataTable({
+                let table = $('#table').DataTable({
                     processing: true,
                     serverSide: true,
                     timeout: 500,
                     'autoWidth'   : false,
-                    ajax: "{{ route('datatable_user') }}",
+                    ajax: "{{ route('datatable_buku') }}",
                     columns: [
                         {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                        {data: 'name', name: 'name'},
-                        {data: 'email', name: 'email'},
+                        {data: 'judul_buku', name: 'judul_buku'},
+                        {data: 'jenis_buku', name: 'jenis_buku'},
+                        {data: 'pengarang', name: 'pengarang'},
+                        {data: 'penerbit', name: 'penerbit'},
+                        {data: 'tahun_terbit', name: 'tahun_terbit'},
+                        {data: 'sinopsis', name: 'sinopsis'},
                     ]
                 });
+
+                $('.filter-input').keyup(function(){
+                  table.column( $(this).data('column'))
+                    .search( $(this).val())
+                    .draw();
+                });
+
+                $('.filter-select').change(function(){
+                  table.column( $(this).data('column'))
+                    .search( $(this).val())
+                    .draw();
+                })
+                
+
             });
     </script>
 @endsection
