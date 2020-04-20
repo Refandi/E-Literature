@@ -9,8 +9,8 @@
           </div><!-- /.col -->
           <div class="col-sm-6">
             <ol class="breadcrumb float-sm-right">
-              <li class="breadcrumb-item"><a href="#">Home</a></li>
-              <li class="breadcrumb-item active">Dashboard v1</li>
+              <li class="breadcrumb-item"><a href="#">Halaman</a></li>
+              <li class="breadcrumb-item active">Pengguna</li>
             </ol>
           </div><!-- /.col -->
         </div><!-- /.row -->
@@ -31,16 +31,17 @@
             <!-- Custom tabs (Charts with tabs)-->
             <div class="card">
               <div class="card-header">
-                  <a href="{{ route('user.create') }}" title="Create" class="btn btn-primary modal-create"><i class="fa fa-plus-circle"></i> Tambah</a>
-              </div><!-- /.card-header -->
+                  <a href="javascript:void(0)" id="tombol-user" title="Create" class="btn btn-info btn-sm modal-create float-right"><i class="fa fa-plus-circle"></i> Tambah</a>
+                  <h5 class><b>Pengguna</b></h5>
+                </div><!-- /.card-header -->
               <div class="card-body">
-              <table id="table" class="table table-bordered table-striped">
+              <table id="table_user" class="table table-bordered table-striped">
                 <thead>
                 <tr>
-                  <th>No</th>
+                  <th style="width: 25px">No</th>
                   <th>Nama</th>
                   <th>Email</th>
-                  <th style="width: 150px">#</th>
+                  <th style="width: 75px">#</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -60,9 +61,10 @@
 @endsection
 
 @section('js')
+@include('User.modal_user')
     <script>
             $(document).ready(function() {
-                $('#table').DataTable({
+                $('#table_user').DataTable({
                     processing: true,
                     serverSide: true,
                     timeout: 500,
@@ -75,6 +77,14 @@
                         {data: 'action', name: 'action', orderable: false, searchable: false}
                     ]
                 });
+            });
+
+            $(document).ready(function () {
+              $.ajaxSetup({
+                  headers: {
+                      'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                  }
+              });
             });
     </script>
 @endsection

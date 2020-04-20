@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Yajra\DataTables\DataTables;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+
 use File;
 use App\Buku;
 use App\JenisBuku;
@@ -123,15 +125,21 @@ class BukuController extends Controller
     {
         
         $data = Buku::all();
-        $route = 'download.file';
         return Datatables::of($data)
             ->addColumn('action', function($data) {
-                $button = '<a href="javascript:void(0)" data-id="'.$data->id.'" class="btn btn-info btn-sm btn-ubah-buku" data-toggle="tooltip"><i class="far fa-edit"></i></a>';
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<button type="button" name="delete" id="'.$data->id.'" class="btn btn-danger btn-sm btn-hapus-buku"><i class="far fa-trash-alt"></i></button>';  
-                $button .= '&nbsp;&nbsp;';
-                $button .= '<a href="/E-Literature/download-file/'.$data->id.'" class="btn btn-info btn-sm" data-toggle="tooltip"><i class="fas fa-download"></i></a>';                     
-                return $button;
+                if(Auth::user()->role == 'Admin'){
+                    $button = '<a href="javascript:void(0)" data-id="'.$data->id.'" class="btn btn-info btn-sm btn-ubah-buku" data-toggle="tooltip"><i class="far fa-edit"></i></a>';
+                    $button .= '&nbsp;&nbsp;';
+                    $button .= '<button type="button" name="delete" id="'.$data->id.'" class="btn btn-danger btn-sm btn-hapus-buku"><i class="far fa-trash-alt"></i></button>';  
+                    $button .= '&nbsp;&nbsp;';
+                    $button .= '<a href="/E-Literature/download-file/'.$data->id.'" class="btn btn-info btn-sm" data-toggle="tooltip"><i class="fas fa-download"></i></a>';                     
+                    return $button;
+                }
+                elseif(Auth::user()->role == 'User'){
+                    $button = '<a href="/E-Literature/download-file/'.$data->id.'" class="btn btn-info btn-sm" data-toggle="tooltip"><i class="fas fa-download"></i> Unduh</a>';
+                    return $button;
+                }
+                
                 
             })
 

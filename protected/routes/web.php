@@ -18,13 +18,13 @@ use App\Pengarang;
 use App\TahunTerbit;
 
 
-Route::get('/', function () {
-    $jenis_buku = JenisBuku::all();
-    $pengarang = Pengarang::all();
-    $penerbit = Penerbit::all();
-    $tahun_terbit = TahunTerbit::all();
-    return view('welcome', compact('jenis_buku', 'pengarang', 'penerbit', 'tahun_terbit'));
-});
+// Route::get('/', function () {
+//     $jenis_buku = JenisBuku::all();
+//     $pengarang = Pengarang::all();
+//     $penerbit = Penerbit::all();
+//     $tahun_terbit = TahunTerbit::all();
+//     return view('welcome', compact('jenis_buku', 'pengarang', 'penerbit', 'tahun_terbit'));
+// });
 
 
 
@@ -53,6 +53,9 @@ Route::get('/datatable/welcome', 'KategoriController@datatable_welcome')->name('
 //DOWNLOAD FILE
 Route::get('/download-file/{id}', 'BukuController@download_pdf')->name('download.file');
 
+//UBAH PROFIL
+Route::post('/ubah-profil', 'UserController@ubah_profil')->name('user.profil');
+
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');

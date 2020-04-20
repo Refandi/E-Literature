@@ -4,11 +4,10 @@
 <div class="content-header">
       <div class="container-fluid">
 
-
         <div class="row">
           <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box">
-              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-cog"></i></span>
+            <div class="info-box mb-2 mt-2">
+              <span class="info-box-icon bg-info elevation-1"><i class="fas fa-book"></i></span>
              
               <div class="info-box-content">
                 <div class="col-sm-12">
@@ -28,8 +27,8 @@
           </div>
           <!-- /.col -->
           <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-thumbs-up"></i></span>
+            <div class="info-box mb-2 mt-2">
+              <span class="info-box-icon bg-danger elevation-1"><i class="fas fa-user"></i></span>
 
               <div class="info-box-content">
                 <div class="col-sm-12">
@@ -53,8 +52,8 @@
           <div class="clearfix hidden-md-up"></div>
 
           <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-shopping-cart"></i></span>
+            <div class="info-box mb-2 mt-2">
+              <span class="info-box-icon bg-success elevation-1"><i class="fas fa-upload"></i></span>
 
               <div class="info-box-content">
                   <div class="col-sm-12">
@@ -74,8 +73,8 @@
           </div>
           <!-- /.col -->
           <div class="col-12 col-sm-6 col-md-3">
-            <div class="info-box mb-3">
-              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-users"></i></span>
+            <div class="info-box mb-2 mt-2">
+              <span class="info-box-icon bg-warning elevation-1"><i class="fas fa-clock"></i></span>
 
               <div class="info-box-content">
                   <div class="col-sm-12">
@@ -131,6 +130,9 @@
                   <th>Penerbit</th>
                   <th>Tahun</th>
                   <th>Sinopsis</th>
+                  @if(Auth::user()->role == 'User')
+                  <th style="width: 75px">#</th>
+                  @endif
                 </tr>
                 </thead>
                 <tbody>
@@ -150,7 +152,15 @@
 @endsection
 
 @section('js')
+@if(Auth::user()->role == 'Admin')
     <script>
+    $(document).ready(function () {
+      $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
+    });
             $(document).ready(function() {
                 let table = $('#table').DataTable({
                     processing: true,
@@ -184,4 +194,51 @@
 
             });
     </script>
+@elseif(Auth::user()->role == 'User')
+<script>
+
+  $(document).ready(function () {
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+  });
+
+  $(document).ready(function() {
+      let table = $('#table').DataTable({
+          processing: true,
+          serverSide: true,
+          timeout: 500,
+          'autoWidth'   : false,
+          ajax: "{{ route('datatable_buku') }}",
+          columns: [
+              {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+              {data: 'judul_buku', name: 'judul_buku'},
+              {data: 'jenis_buku', name: 'jenis_buku'},
+              {data: 'pengarang', name: 'pengarang'},
+              {data: 'penerbit', name: 'penerbit'},
+              {data: 'tahun_terbit', name: 'tahun_terbit'},
+              {data: 'sinopsis', name: 'sinopsis'},
+              {data: 'action', name: 'action', orderable: false, searchable: false}
+          ]
+      });
+
+      $('.filter-input').keyup(function(){
+        table.column( $(this).data('column'))
+          .search( $(this).val())
+          .draw();
+      });
+
+      $('.filter-select').change(function(){
+        table.column( $(this).data('column'))
+          .search( $(this).val())
+          .draw();
+      })
+      
+
+  });
+</script>
+@endif
+
 @endsection

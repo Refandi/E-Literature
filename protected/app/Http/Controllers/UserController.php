@@ -23,9 +23,46 @@ class UserController extends Controller
  
     public function store(Request $request)
     {
-        $input = $request->all();
-        User::updateOrCreate($input);
-        return response()->json($input);
+        $id = $request->id;
+        if($request->password != ''){
+            $pass = bcrypt($request->password);
+    
+            $post = User::updateOrCreate(['id' => $id],
+            ['name' => $request->name,
+            'email' => $request->email,
+            'password' => $pass,
+            'role' => $request->role
+            ]);
+        }
+        else{
+            $post = User::updateOrCreate(['id' => $id],
+            ['name' => $request->name,
+            'email' => $request->email,
+            'role' => $request->role
+            ]);
+        }
+        return response()->json($post);
+    }
+
+    public function ubah_profil(Request $request)
+    {
+        $id = $request->id;
+        if($request->password != ''){
+            $pass = bcrypt($request->password);
+    
+            $post = User::updateOrCreate(['id' => $id],
+            ['name' => $request->name,
+            'email' => $request->email,
+            'password' => $pass,
+            ]);
+        }
+        else{
+            $post = User::updateOrCreate(['id' => $id],
+            ['name' => $request->name,
+            'email' => $request->email,
+            ]);
+        }
+        return response()->json($post);
     }
  
     public function show($id)
@@ -42,10 +79,7 @@ class UserController extends Controller
 
     public function update(Request $request, $id)
     {
-        $data = User::findOrFail($id);
-        $input = $request->all();
-        $data->update($input);
-        return response()->json($input);
+
     }
  
     public function destroy($id)
@@ -56,15 +90,15 @@ class UserController extends Controller
 
     public function datatable()
     {
-        $data = User::all();
+        $data = User::where('role', 'User')->get();
         return Datatables::of($data)
-            ->addColumn('action', function($data) {
-                return view('datatable.action', [
-                    'edit_url' => route('user.edit', $data->id),
-                    'del_url'  => route('user.destroy', $data->id),
-                ]);
+        ->addColumn('action', function($data) {
+            $button = '<a href="javascript:void(0)" data-id="'.$data->id.'" class="edit btn btn-info btn-sm btn-ubah-user" data-toggle="tooltip"><i class="far fa-edit"></i></a>';
+            $button .= '&nbsp;&nbsp;';
+            $button .= '<button type="button" name="delete" id="'.$data->id.'" class="delete btn btn-danger btn-sm btn-hapus-user"><i class="far fa-trash-alt"></i></button>';     
+            return $button;
 
-            })
+        })
             ->addIndexColumn()->make(true);
         
     }
